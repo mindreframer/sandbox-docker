@@ -1,0 +1,44 @@
+http://syntaxi.net/2012/12/21/installing-prebuilt-binaries-with-rvm/
+
+
+
+Preparing ruby-2.0.0-p195-turbo ...
+Prepared ruby-2.0.0-p195-turbo.tar.bz2.
+--- upload:
+ssh "artifacts.corp" "mkdir -p /var/www/binaries//ubuntu/12.10/x86_64/"
+scp "ruby-2.0.0-p195-turbo.tar.bz2" "artifacts.corp:/var/www/binaries//ubuntu/12.10/x86_64/ruby-2.0.0-p195-turbo.tar.bz2"
+--- rvm/config/remote:
+http://jruby.org.s3.amazonaws.com/downloads/ruby-2.0.0-p195-turbo.tar.bz2
+--- rvm/config/md5:
+http://jruby.org.s3.amazonaws.com/downloads/ruby-2.0.0-p195-turbo.tar.bz2=9d2d408f694db798353099362c29e7dc
+--- rvm/config/sha512:
+http://jruby.org.s3.amazonaws.com/downloads/ruby-2.0.0-p195-turbo.tar.bz2=54f3a4864043854ede0f0115b6937e2e02cb3c651d49f4920125f94a4531d852316380872983cc9e6e77039129f18d7c5d63abc45e1cccbd5c63c3849570f1e0
+
+
+
+## extract
+tar xfvj ruby-2.0.0-p195-turbo.tar.bz2
+
+
+
+# on recieving end
+netcat -l -p 1234 > ruby-2.0.0-p195-turbo.tar.bz2
+# send now
+cat ruby-2.0.0-p195-turbo.tar.bz2 | netcat 172.16.42.6 1234 -q 10
+
+
+
+sudo apt-get install curl git-core patch build-essential bison \
+  zlib1g-dev libssl-dev libxml2-dev \
+  libxml2-dev sqlite3 libsqlite3-dev autotools-dev \
+  libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev \
+  libyaml-dev libtool libgdbm-dev libncurses5-dev pkg-config \
+  libffi-dev libpq-dev libpq-dev
+
+
+# libgdbm.so.3,libgdbm_compat.so.3,libyaml-0.so.2.
+#
+rvm mount -r ./ruby-2.0.0-p195-turbo.tar.bz2
+
+
+apt-get install libyaml-dev libgdbm-dev
